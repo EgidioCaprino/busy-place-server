@@ -1,3 +1,4 @@
 .idea
 target
 busy-place-server.iml
+src/main/resources/application.properties
