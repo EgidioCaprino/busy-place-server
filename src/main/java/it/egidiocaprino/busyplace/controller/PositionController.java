@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.sql.DataSource;
 
@@ -25,11 +27,12 @@ public class PositionController {
     PositionRepository positionRepository;
 
     @RequestMapping(value = "/api/position", method = RequestMethod.GET)
-    public @ResponseBody Integer getPositions(@RequestParam double latitude,
-                                              @RequestParam double longitude,
-                                              @RequestParam double distance)
+    public @ResponseBody String getPositions(@RequestParam double latitude,
+                                             @RequestParam double longitude,
+                                             @RequestParam double distance)
     {
-        return positionRepository.getLastHourPositionsCount(latitude, longitude, distance);
+        int count = positionRepository.getLastHourPositionsCount(latitude, longitude, distance);
+        return NumberFormat.getNumberInstance(Locale.US).format(count);
     }
 
     @RequestMapping(value = "/api/position", method = RequestMethod.POST)
